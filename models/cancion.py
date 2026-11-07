@@ -16,11 +16,11 @@ class EstadoCancion(str, enum.Enum):
 
 
 class Cancion(Base):
-    __tablename__ = "canciones"
+    __tablename__ = "CANCION"
 
     id: Mapped[int] = mapped_column(primary_key=True)
-    usuario_id: Mapped[int] = mapped_column(ForeignKey("usuarios.id", ondelete="CASCADE"))
-    artista_id: Mapped[int] = mapped_column(ForeignKey("artistas.id"))
+    usuario_id: Mapped[int] = mapped_column(ForeignKey("USUARIO.id", ondelete="CASCADE"))
+    artista_id: Mapped[int] = mapped_column(ForeignKey("ARTISTA.id"))
     titulo: Mapped[str] = mapped_column(String(80))
     tonalidad: Mapped[str] = mapped_column(String(4))
     bpm: Mapped[int] = mapped_column(SmallInteger)
@@ -41,10 +41,10 @@ class Cancion(Base):
 
 
 class CancionAcorde(Base):
-    __tablename__ = "cancion_acordes"
+    __tablename__ = "CANCION_ACORDE"
 
     cancion_id: Mapped[int] = mapped_column(
-        ForeignKey("canciones.id", ondelete="CASCADE"), primary_key=True
+        ForeignKey("CANCION.id", ondelete="CASCADE"), primary_key=True
     )
     posicion: Mapped[int] = mapped_column(primary_key=True)
     acorde: Mapped[str] = mapped_column(String(8))
