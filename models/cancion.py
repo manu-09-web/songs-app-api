@@ -5,29 +5,14 @@ from decimal import Decimal
 from sqlalchemy import DECIMAL, Date, Enum, ForeignKey, SmallInteger, String, Text
 from sqlalchemy.orm import Mapped, mapped_column, relationship
 
-from database import Base
+from core.database import Base
+from models.artista import Artista
 
 
 class EstadoCancion(str, enum.Enum):
     no_dominada = "no_dominada"
     a_medias = "a_medias"
     dominada = "dominada"
-
-
-class Usuario(Base):
-    __tablename__ = "usuarios"
-
-    id: Mapped[int] = mapped_column(primary_key=True)
-    nombre: Mapped[str] = mapped_column(String(60))
-    email: Mapped[str] = mapped_column(String(120), unique=True)
-    password_hash: Mapped[str] = mapped_column(String(255))
-
-
-class Artista(Base):
-    __tablename__ = "artistas"
-
-    id: Mapped[int] = mapped_column(primary_key=True)
-    nombre: Mapped[str] = mapped_column(String(60), unique=True)
 
 
 class Cancion(Base):

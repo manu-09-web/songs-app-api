@@ -2,16 +2,9 @@ from datetime import datetime, timedelta, timezone
 
 import bcrypt
 import jwt
-from fastapi import Depends
-from fastapi.security import HTTPAuthorizationCredentials, HTTPBearer
-from sqlalchemy.orm import Session
 
-from config import settings
-from database import get_db
-from errors import ApiError
-from models import Usuario
-
-bearer = HTTPBearer(auto_error=False)
+from core.config import settings
+from core.errors import ApiError
 
 
 def cifrar_password(password: str) -> str:
@@ -31,19 +24,9 @@ def no_autenticado() -> ApiError:
     return ApiError(401, "NO_AUTENTICADO", "Tu sesión expiró, inicia sesión de nuevo")
 
 
-def usuario_actual(
-    credenciales: HTTPAuthorizationCredentials | None = Depends(bearer),
-    db: Session = Depends(get_db),
-) -> Usuario:
-    if credenciales is None:
-        raise no_autenticado()
+def leer_token(token: str) -> int:
     try:
-        payload = jwt.decode(credenciales.credentials, settings.jwt_secret, algorithms=["HS256"])
-        usuario_id = int(payload["sub"])
+        payload = jwt.decode(token, settings.jwt_secret, algorithms=["HS256"])
+        return int(payload["sub"])
     except (jwt.PyJWTError, KeyError, ValueError):
         raise no_autenticado()
-
-    usuario = db.get(Usuario, usuario_id)
-    if usuario is None:
-        raise no_autenticado()
-    return usuario

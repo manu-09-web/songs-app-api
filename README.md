@@ -11,6 +11,19 @@ La app de Android está en [songs-app](https://github.com/manu-09-web/songs-app)
 - JWT (PyJWT) y bcrypt
 - Pydantic y pydantic-settings
 
+## Estructura
+
+```
+main.py          arranca la API y registra los controllers
+core/            configuración, conexión a MySQL, seguridad (bcrypt y JWT) y errores
+models/          tablas de la base de datos (SQLAlchemy)
+schemas/         datos que entran y salen, con sus validaciones (Pydantic)
+repositories/    consultas a la base de datos
+services/        reglas del negocio
+controllers/     rutas HTTP: reciben la petición, llaman al service y responden
+sql/schema.sql   script para crear la base de datos
+```
+
 ## Endpoints
 
 Base: `/api/v1`
