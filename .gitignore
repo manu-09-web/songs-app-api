@@ -1,0 +1,14 @@
+# Entorno de Python
+.venv/
+venv/
+__pycache__/
+*.pyc
+
+# Configuración con claves (solo existe en cada computadora o servidor)
+.env
+.env.*
+!.env.example
+
+# Editores
+.vscode/
+.idea/
